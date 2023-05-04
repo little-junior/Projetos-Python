@@ -129,7 +129,6 @@ for i in range(int(n_numeros)):
     lista_n.append(numeros_n)
 
 metodo = descobrir_método(lista_m)
-print(metodo)
 
 met_escolhido = 0
 if metodo == "Método A":
@@ -150,5 +149,8 @@ mes = descobrir_mes(mes_data_invasao)
 
 if mes == "fevereiro" and dia > 28:
     print("Código corrompido!!!!👽")
+elif mes == ("abril" or "junho" or "setembro" or "novembro") and dia > 30:
+    print("Código corrompido!!!!👽")
 else:
+    print(metodo)
     print(f"Invasão: {dia} de {mes}")
