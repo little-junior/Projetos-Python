@@ -62,8 +62,7 @@ def metodo_b(vet_n, num_vetor):
     soma_d = 0
     sn = 0
     for p in vet_n:
-        for q in str(p):
-            soma_d = soma_d + int(q)
+        soma_d = soma_d + p % 10 + ((p//10) % 10)
     sn = sn + soma_d
     
     return sn
@@ -96,6 +95,7 @@ def descobrir_mes(mes_data_invasao):
 
     
 saida_m = False
+m_numeros = 0
 while saida_m == False:
     m_numeros = int(input("m:"))
     if  int(m_numeros) <= 0 or int(m_numeros) >= 6:
@@ -104,6 +104,7 @@ while saida_m == False:
         saida_m = True
 
 saida_n = False
+n_numeros = 0
 while saida_n == False:
     n_numeros = int(input("n:"))
     if int(n_numeros) <= 0 or int(n_numeros) >= 11:
@@ -116,7 +117,7 @@ for i in range(int(m_numeros)):
     saida_m_numeros = False
     while saida_m_numeros == False:
         numeros_m = int(input(f"m[{i}]: "))
-        if numeros_m <= 0 and numeros_m >= 500:
+        if numeros_m <= 0 or numeros_m >= 500:
             print("Entre 0 e 500")
         else:
             lista_m.append(numeros_m)
@@ -130,6 +131,7 @@ for i in range(int(n_numeros)):
 metodo = descobrir_método(lista_m)
 print(metodo)
 
+met_escolhido = 0
 if metodo == "Método A":
     met_escolhido = metodo_a(lista_n, n_numeros)
 elif metodo == "Método B":
@@ -146,4 +148,7 @@ else:
 
 mes = descobrir_mes(mes_data_invasao)
 
-print(f"Invasão: {dia} de {mes}")
+if mes == "fevereiro" and dia > 28:
+    print("Código corrompido!!!!👽")
+else:
+    print(f"Invasão: {dia} de {mes}")
