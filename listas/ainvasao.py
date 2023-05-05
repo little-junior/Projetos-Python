@@ -19,8 +19,8 @@ Etapas de determinação:
 - ACUMULO GERAL = SN
 
 *Descobrindo a data:
-- RESTO DA DIVISÃO DE SN POR 31 = DIA DA INVASAO (0 DE RESTO = DIA 31)
-- DIVISAO INTEIRA DE SN POR 12 = MES DA INVASAO (0 = DEZEMBRO)
+- RESTO DA DIVISÃO DE SN POR 31 = dia_final DA INVASAO (0 DE RESTO = dia_final 31)
+- DIVISAO INTEIRA DE SN POR 12 = mes_final DA INVASAO (0 = DEZEMBRO)
 """
 def descobrir_método (vet_m):
     sm = 0
@@ -28,8 +28,12 @@ def descobrir_método (vet_m):
         sm = sm + i
 
     sd = 0
-    for digito in str(sm):
-        sd = sd + int(digito)
+    div_inteira = sm
+    while div_inteira != 0:
+        digito = div_inteira % 10
+        div_inteira = div_inteira // 10
+        sd = sd + digito
+    
     if sd % 2 == 0:
         return "Método A"
     else:
@@ -51,106 +55,107 @@ def metodo_a (vet_n, num_vetor):
     return sn
 
 def metodo_b(vet_n, num_vetor):
-    seq = [1]
+    seq = []
     num = 1
-    for i in range(0, num_vetor):
-        seq.append(seq[i] + num)
-        num += 1
-    for j in range(0, num_vetor):
+    for i in range(num_vetor):
+        seq.append(num)
+        num = num + (i+1)
+    
+    for j in range(num_vetor):
         vet_n[j] = vet_n[j] + seq[j]
 
     soma_d = 0
     sn = 0
     for p in vet_n:
-        soma_d = soma_d + p % 10 + ((p//10) % 10)
-    sn = sn + soma_d
+        soma_d = p % 10 + ((p//10) % 10)
+        sn = sn + soma_d
     
     return sn
 
-def descobrir_mes(mes_data_invasao):
-    if mes_data_invasao == 1:
+def descobrir_mes_final(mes_final_data_invasao):
+    if mes_final_data_invasao == 1:
         return "janeiro"
-    elif mes_data_invasao == 2:
+    elif mes_final_data_invasao == 2:
         return "fevereiro"
-    elif mes_data_invasao == 3:
+    elif mes_final_data_invasao == 3:
         return "março"
-    elif mes_data_invasao == 4:
+    elif mes_final_data_invasao == 4:
         return "abril"
-    elif mes_data_invasao == 5:
+    elif mes_final_data_invasao == 5:
         return "maio"
-    elif mes_data_invasao == 6:
+    elif mes_final_data_invasao == 6:
         return "junho"
-    elif mes_data_invasao == 7:
+    elif mes_final_data_invasao == 7:
         return "julho"
-    elif mes_data_invasao == 8:
+    elif mes_final_data_invasao == 8:
         return "agosto"
-    elif mes_data_invasao == 9:
+    elif mes_final_data_invasao == 9:
         return "setembro"
-    elif mes_data_invasao == 10:
+    elif mes_final_data_invasao == 10:
         return "outubro"
-    elif mes_data_invasao == 11:
+    elif mes_final_data_invasao == 11:
         return "novembro"
-    elif mes_data_invasao == 0:
+    elif mes_final_data_invasao == 12 or mes_final_data_invasao == 0:
         return "dezembro"
 
     
 saida_m = False
-m_numeros = 0
+m = 0
 while saida_m == False:
-    m_numeros = int(input("m:"))
-    if  int(m_numeros) <= 0 or int(m_numeros) >= 6:
+    m = int(input("m:"))
+    if m <= 0 or m >= 6:
         print("Esse dado precisa ser maior que 0 e menor que 6")
     else:
         saida_m = True
 
 saida_n = False
-n_numeros = 0
+n = 0
 while saida_n == False:
-    n_numeros = int(input("n:"))
-    if int(n_numeros) <= 0 or int(n_numeros) >= 11:
+    n = int(input("n:"))
+    if n <= 0 or n >= 11:
         print("Esse dado precisa ser maior que 0 e menor que 11")
     else:
         saida_n = True
 
-lista_m = []
-for i in range(int(m_numeros)):
-    saida_m_numeros = False
-    while saida_m_numeros == False:
-        numeros_m = int(input(f"m[{i}]: "))
-        if numeros_m <= 0 or numeros_m >= 500:
+m_numeros = []
+for i in range(m):
+    saida_m = False
+    while saida_m == False:
+        entrada_m_numeros = int(input("m[%s]: " %i))
+        if entrada_m_numeros <= 0 or entrada_m_numeros >= 500:
             print("Entre 0 e 500")
         else:
-            lista_m.append(numeros_m)
-            saida_m_numeros = True
+            m_numeros.append(entrada_m_numeros)
+            saida_m = True
 
-lista_n = []
-for i in range(int(n_numeros)):
-    numeros_n = int(input(f"n[{i}]: "))
-    lista_n.append(numeros_n)
+n_numeros = []
+for i in range(n):
+    entrada_n_numeros = int(input("n[%s]: " %i))
+    n_numeros.append(entrada_n_numeros)
 
-metodo = descobrir_método(lista_m)
+metodo = descobrir_método(m_numeros)
 
 met_escolhido = 0
 if metodo == "Método A":
-    met_escolhido = metodo_a(lista_n, n_numeros)
+    met_escolhido = metodo_a(n_numeros, n)
 elif metodo == "Método B":
-    met_escolhido = metodo_b(lista_n, n_numeros)
+    met_escolhido = metodo_b(n_numeros, n)
 
 
-dia_data_invasao = met_escolhido % 31
-mes_data_invasao = met_escolhido % 12
+dia_estimado = met_escolhido % 31
+mes_estimado = met_escolhido % 12
 
-if dia_data_invasao == 0:
-    dia = 31
+if dia_estimado == 0:
+    dia_final = 31
 else:
-    dia = dia_data_invasao
+    dia_final = dia_estimado
 
-mes = descobrir_mes(mes_data_invasao)
+mes_final = descobrir_mes_final(mes_estimado)
 
-if mes == "fevereiro" and dia > 28:
+if mes_final == "fevereiro" and dia_final > 28:
     print("Código corrompido!!!!👽")
-elif mes == ("abril" or "junho" or "setembro" or "novembro") and dia > 30:
+elif mes_final == ("abril" or "junho" or "setembro" or "novembro") and dia_final > 30:
     print("Código corrompido!!!!👽")
 else:
     print(metodo)
-    print(f"Invasão: {dia} de {mes}")
+    print("Invasão: %s de %s" % (dia_final, mes_final))
