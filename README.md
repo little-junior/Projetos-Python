@@ -6,3 +6,4 @@
 - Projetos da faculdade
 - Projetos de cursos
 - Projetos Pessoais
+- Estudos
